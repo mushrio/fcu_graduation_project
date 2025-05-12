@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SelectIdentifyRange">
+
+    <ImageView
+        android:id="@+id/iv_select_range_photo"
+        android:layout_width="371dp"
+        android:layout_height="536dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/template" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mbtn_select_model"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:text="選擇模型"
+        android:textSize="24sp"
+        app:backgroundTint="@color/material_dynamic_primary40"
+        app:cornerRadius="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/iv_select_range_photo"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/iv_select_range_photo"
+        app:layout_constraintTop_toBottomOf="@+id/iv_select_range_photo"
+        app:rippleColor="@color/material_dynamic_primary30" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mbtn_load_identified_model"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:text="載入辨識模型"
+        android:textSize="24sp"
+        app:backgroundTint="@color/material_dynamic_primary40"
+        app:cornerRadius="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/iv_select_range_photo"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/iv_select_range_photo"
+        app:layout_constraintTop_toBottomOf="@+id/mbtn_select_model"
+        app:rippleColor="@color/material_dynamic_primary30" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

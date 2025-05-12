@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TakeServeralPhotos">
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/pvv_several_photos"
+        android:layout_width="match_parent"
+        android:layout_height="550dp"
+
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mbtn_take_serveral_photos"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:text="拍照"
+        android:textSize="24sp"
+        app:backgroundTint="@color/material_dynamic_primary40"
+        app:cornerRadius="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/mbtn_take_photo_complete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="@color/material_dynamic_primary30" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mbtn_take_photo_complete"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:text="完成"
+        android:textSize="24sp"
+        app:backgroundTint="@color/material_dynamic_primary40"
+        app:cornerRadius="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="@color/material_dynamic_primary30" />
+
+    <TextView
+        android:id="@+id/tv_photoed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="已拍攝0張照片"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/mbtn_take_serveral_photos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
