@@ -8,10 +8,7 @@ def num_channels(img: np.ndarray):
     return img.shape[-1]
 
 def gray(img_bgr: np.ndarray) -> np.ndarray:
-    assert num_channels(img_bgr) == 3
-
-    img_gray = np.min(img_bgr, axis=2)
-    return img_gray
+    return cv2.cvtColor(img_bgr, cv2.COLOR_BGR2GRAY)
 
 def find_docs(img_containing_doc, complete_doc_shape) -> np.ndarray:
 
@@ -24,8 +21,7 @@ def find_docs(img_containing_doc, complete_doc_shape) -> np.ndarray:
 
     contours, _ = cv2.findContours(edged, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)  # [[x1, y1], ...]
 
-    contours = [contour.reshape((-1,2)) for contour in contours]
-    contour = max(contours,key=lambda c: cv2.contourArea(c))
+    contour = max(contours, key=cv2.contourArea).reshape((-1, 2))
 
     torrent_rate = 0.02
     step = 0.01

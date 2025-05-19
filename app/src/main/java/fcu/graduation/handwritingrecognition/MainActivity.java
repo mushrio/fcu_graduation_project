@@ -7,13 +7,14 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.chaquo.python.Python;
+import com.chaquo.python.android.AndroidPlatform;
 import com.google.android.material.button.MaterialButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -44,6 +45,14 @@ public class MainActivity extends AppCompatActivity {
             BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
             bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
         });
+
+        // 啟動 Python（只需一次）
+        if (!Python.isStarted()) {
+            Python.start(new AndroidPlatform(this));
+        }
+
+        // 在背景執行緒預載 Python 模組
+        new Thread(CallPython::preload).start();
     }
 
     private List<Uri> getHistoryList() {

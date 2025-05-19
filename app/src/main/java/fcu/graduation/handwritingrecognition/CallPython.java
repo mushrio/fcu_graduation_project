@@ -10,8 +10,20 @@ import java.io.ByteArrayOutputStream;
 
 public class CallPython {
     static final String PYTHON_INTERFACE = "java_python_interface"; // py檔案名
-    private static PyObject getModule(){
-        return Python.getInstance().getModule(PYTHON_INTERFACE);
+    private static PyObject cachedModule = null;
+
+    // 預載模組：在 app 啟動後盡早呼叫（如 MainActivity onCreate）
+    public static void preload() {
+        if (cachedModule == null) {
+            cachedModule = Python.getInstance().getModule(PYTHON_INTERFACE);
+        }
+    }
+
+    private static PyObject getModule() {
+        if (cachedModule == null) {
+            cachedModule = Python.getInstance().getModule(PYTHON_INTERFACE);
+        }
+        return cachedModule;
     }
 
     private static byte[] encodePng(Bitmap bitmap){ // 將Bitmap編碼成PNG格式的Byte陣列

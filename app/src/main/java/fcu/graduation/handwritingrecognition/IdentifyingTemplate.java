@@ -3,32 +3,17 @@ package fcu.graduation.handwritingrecognition;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.ImageDecoder;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import com.chaquo.python.Python;
-import com.chaquo.python.android.AndroidPlatform;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
 
 public class IdentifyingTemplate extends AppCompatActivity {
 
@@ -52,10 +37,6 @@ public class IdentifyingTemplate extends AppCompatActivity {
 
         intent = new Intent(this, SelectIdentifyRange.class);
         intent.putExtra("image_uri", imageUriString);
-
-        if(!Python.isStarted()){
-            Python.start(new AndroidPlatform(this));
-        }
 
         new Thread(() -> {
             Bitmap bitmap = ImageUtils.getBitmapFromUri(this, imageUri); // 傳入 context 與 uri
@@ -108,14 +89,16 @@ public class IdentifyingTemplate extends AppCompatActivity {
         }
         TextView status = findViewById(R.id.tv_loading_text);
         new Thread(() -> {
-            runOnUiThread(() -> status.setText("處理模板中..."));
+            runOnUiThread(() -> status.setText("處理定位中..."));
             Bitmap processedBitmap = CallPython.locatePhoneImage(bitmap);
+            runOnUiThread(() -> status.setText("線段偵測中..."));
             int[][] tableLines = CallPython.detectLines(processedBitmap, 606, 3194, 1586, 2297); // 使用者框選的範圍，這裡是自己手打的座標
             int[] rows = tableLines[0];
             int[] cols = tableLines[1];
             tableLineRows = rows;
             tableLineCols = cols;
             templateBitmap = processedBitmap;
+            runOnUiThread(() -> status.setText("模板畫線中..."));
             Bitmap drawnBitmap = CallPython.drawTableLines(processedBitmap, cols, rows);
             saveImage(drawnBitmap);
         }).start();
