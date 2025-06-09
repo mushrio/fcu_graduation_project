@@ -40,8 +40,8 @@ def find_docs(img_containing_doc, complete_doc_shape) -> np.ndarray:
         step /= 2
 
         loop_count += 1
-        if loop_count > 10:
-            raise Exception("contour can't approx to a rectangle.")
+        if loop_count > 10: # 10次以內找不到就回傳None
+            return None
 
     approx = approx.reshape((-1,2))
 

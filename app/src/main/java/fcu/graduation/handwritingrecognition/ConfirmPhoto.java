@@ -35,10 +35,11 @@ public class ConfirmPhoto extends AppCompatActivity {
             ivConfirm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(ConfirmPhoto.this, SelectIdentifyRange.class);
+                    Intent intent = new Intent(ConfirmPhoto.this, IdentifyingTemplate.class);
                     intent.putExtra("image_uri", imageUri.toString());
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     startActivity(intent);
+                    finish();
                 }
             });
         }

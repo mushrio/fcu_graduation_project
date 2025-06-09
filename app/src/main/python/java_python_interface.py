@@ -25,6 +25,8 @@ def locate_template_image(png_bytearray):
     img = decode(png_bytearray)
     # img = scale_small(img) # 縮小圖片可加快運算速度(測試時因為表格座標寫死所以這裡先註解)
     result_img = find_docs(img, 'auto') # 原程式的定位文件函式
+    if result_img is None: # 處理定位不到文件的問題
+        return None
     return encode(result_img)
 
 # 可能不會用到

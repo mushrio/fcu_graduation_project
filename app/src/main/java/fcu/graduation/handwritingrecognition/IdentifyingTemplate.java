@@ -91,6 +91,14 @@ public class IdentifyingTemplate extends AppCompatActivity {
         new Thread(() -> {
             runOnUiThread(() -> status.setText("處理定位中..."));
             Bitmap processedBitmap = CallPython.locatePhoneImage(bitmap);
+            if (processedBitmap == null) {
+                runOnUiThread(() -> {
+                    Toast.makeText(this, "無法定位文件形狀", Toast.LENGTH_SHORT).show();
+                    finish();
+                });
+                return; //跳出thread，以免繼續執行下去
+            }
+
             runOnUiThread(() -> status.setText("線段偵測中..."));
             int[][] tableLines = CallPython.detectLines(processedBitmap, 606, 3194, 1586, 2297); // 使用者框選的範圍，這裡是自己手打的座標
             int[] rows = tableLines[0];

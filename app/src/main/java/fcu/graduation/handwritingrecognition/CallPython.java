@@ -44,6 +44,9 @@ public class CallPython {
          */
         byte[] pngBytes = encodePng(phoneImg);
         PyObject returnArr = getModule().callAttr("locate_template_image", (Object) pngBytes); // 函式名、參數
+        if (returnArr == null) {
+            return null;
+        }
         byte[] outputPngBytes = returnArr.toJava(byte[].class);
         // 從PNG的Byte陣列解碼成Bitmap
         return decodePng(outputPngBytes);
