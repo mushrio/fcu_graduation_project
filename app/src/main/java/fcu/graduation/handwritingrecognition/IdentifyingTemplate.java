@@ -14,6 +14,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
+import java.util.Arrays;
+
+import fcu.graduation.handwritingrecognition.holder.TemplateDataHolder;
 
 public class IdentifyingTemplate extends AppCompatActivity {
 
@@ -62,6 +65,10 @@ public class IdentifyingTemplate extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
 
                 intent.putExtra("processed_template", saved.toString());
+                TemplateDataHolder.getInstance().setTableLineRows(tableLineRows);
+                TemplateDataHolder.getInstance().setTableLineCols(tableLineCols);
+                // Log.d("DebugTable", "tableLineRows: " + Arrays.toString(tableLineRows));
+                // Log.d("DebugTable", "tableLineCols: " + Arrays.toString(tableLineCols));
                 startActivity(intent);
                 finish();
             });

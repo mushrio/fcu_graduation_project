@@ -16,6 +16,16 @@ import com.google.android.material.button.MaterialButton;
 
 public class BottomSheetSelectModel extends BottomSheetDialogFragment {
 
+    public interface OnModelSelectedListener {
+        void onModelSelected(boolean isOnlyChars);
+    }
+
+    private OnModelSelectedListener listener;
+
+    public void setOnModelSelectedListener(OnModelSelectedListener listener) {
+        this.listener = listener;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // 加載底部彈出選單的佈局
@@ -36,14 +46,14 @@ public class BottomSheetSelectModel extends BottomSheetDialogFragment {
         }
 
         option1.setOnClickListener(v -> {
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putBoolean("is_only_chars", true).apply();
+            prefs.edit().putBoolean("is_only_chars", true).apply();
+            if (listener != null) listener.onModelSelected(true);
             dismiss();
         });
 
         option2.setOnClickListener(v -> {
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putBoolean("is_only_chars", false).apply();
+            prefs.edit().putBoolean("is_only_chars", false).apply();
+            if (listener != null) listener.onModelSelected(false);
             dismiss();  // 關閉底部彈出選單
         });
 
