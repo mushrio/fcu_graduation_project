@@ -113,6 +113,7 @@ public class IdentifyingTemplate extends AppCompatActivity {
             tableLineRows = rows;
             tableLineCols = cols;
             templateBitmap = processedBitmap;
+            TemplateDataHolder.getInstance().setProcessedTemplate(templateBitmap);
             runOnUiThread(() -> status.setText("模板畫線中..."));
             Bitmap drawnBitmap = CallPython.drawTableLines(processedBitmap, cols, rows);
             saveImage(drawnBitmap);

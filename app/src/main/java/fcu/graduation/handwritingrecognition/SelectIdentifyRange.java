@@ -44,14 +44,16 @@ public class SelectIdentifyRange extends AppCompatActivity {
         String templateUriString = getIntent().getStringExtra(("processed_template"));
         Uri templateUri = Uri.parse(templateUriString);
         SharedPreferences prefs = this.getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        boolean is_only_chars = prefs.getBoolean("is_only_chars", false);
+        String models = prefs.getString("models", "lowerLetter.onnx");
 
         ivSelectRangePhoto.setImageURI(templateUri);
 
-        if (is_only_chars) {
+        if (models.equals("lowerLetter.onnx")) {
             mtbnSelectModel.setText("選擇模型:純英文");
-        } else {
+        } else if (models.equals("digit.onnx")){
             mtbnSelectModel.setText("選擇模型:純數字");
+        } else {
+            mtbnSelectModel.setText("選擇模型:英數混合");
         }
 
         mtbnSelectModel.setOnClickListener(new View.OnClickListener() {
@@ -59,11 +61,13 @@ public class SelectIdentifyRange extends AppCompatActivity {
             public void onClick(View v) {
                 BottomSheetSelectModel selectModel = new BottomSheetSelectModel();
                 // 利用callback interface及時更新按鈕字樣
-                selectModel.setOnModelSelectedListener(isOnlyChars -> {
-                    if (isOnlyChars) {
+                selectModel.setOnModelSelectedListener(models -> {
+                    if (models.equals("lowerLetter.onnx")) {
                         mtbnSelectModel.setText("選擇模型:純英文");
-                    } else {
+                    } else if (models.equals("digit.onnx")){
                         mtbnSelectModel.setText("選擇模型:純數字");
+                    } else {
+                        mtbnSelectModel.setText("選擇模型:英數混合");
                     }
                 });
                 selectModel.show(getSupportFragmentManager(), selectModel.getTag());

@@ -1,10 +1,12 @@
 package fcu.graduation.handwritingrecognition.holder;
 
+import android.graphics.Bitmap;
+
 public class TemplateDataHolder {
 
     private static TemplateDataHolder instance;
 
-    private String processedTemplateUri;  // 圖片 URI 字串
+    private Bitmap processedTemplate;  // 圖片
     private int[] tableLineRows;
     private int[] tableLineCols;
 
@@ -20,12 +22,12 @@ public class TemplateDataHolder {
     }
 
     // Getter 和 Setter for processedTemplateUri
-    public void setProcessedTemplateUri(String uri) {
-        this.processedTemplateUri = uri;
+    public void setProcessedTemplate(Bitmap processedTemplate) {
+        this.processedTemplate = processedTemplate;
     }
 
-    public String getProcessedTemplateUri() {
-        return this.processedTemplateUri;
+    public Bitmap getProcessedTemplate() {
+        return this.processedTemplate;
     }
 
     // Getter 和 Setter for tableLineRows
@@ -48,7 +50,7 @@ public class TemplateDataHolder {
 
     // 清除所有資料（可選）
     public void clear() {
-        this.processedTemplateUri = null;
+        this.processedTemplate = null;
         this.tableLineRows = null;
         this.tableLineCols = null;
     }

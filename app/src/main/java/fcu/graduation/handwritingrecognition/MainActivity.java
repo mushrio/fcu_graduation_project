@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean("is_only_chars", true);
+        editor.putString("models", "lowerLetter.onnx");
         // editor.remove("history");
         editor.apply();
 
@@ -56,10 +56,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private List<Uri> getHistoryList() {
-        List<Uri> historyList = new ArrayList<>();
+        List<Uri> validHistoryList = new ArrayList<>();
 
         SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         String json = prefs.getString("history", "[]");
+        JSONArray validHistoryArray = new JSONArray();
 
         try {
             JSONArray historyArray = new JSONArray(json);
@@ -67,13 +68,29 @@ public class MainActivity extends AppCompatActivity {
             for (int i = 0; i < historyArray.length(); i++) {
                 String uriString = historyArray.getString(i);
                 Uri uri = Uri.parse(uriString);
-                historyList.add(uri);  // 加到list裡
+
+                // 嘗試開啟圖片來檢查是否有效
+                try {
+                    getContentResolver().openInputStream(uri).close();  // 檢查檔案是否存在
+                    validHistoryList.add(uri);                         // 如果有效就加到列表
+                    validHistoryArray.put(uriString);                  // 同步保留在新 JSONArray 中
+                } catch (Exception e) {
+                    // 無法讀取圖片，可能是被刪除了，不加入 list
+                    e.printStackTrace();
+                }
+            }
+
+            // 如果列表有變動（移除了壞的 URI），就寫回 SharedPreferences
+            if (validHistoryArray.length() != historyArray.length()) {
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("history", validHistoryArray.toString());
+                editor.apply();
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        return historyList;
+        return validHistoryList;
     }
 }

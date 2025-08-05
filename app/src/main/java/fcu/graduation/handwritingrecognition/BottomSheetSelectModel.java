@@ -17,7 +17,7 @@ import com.google.android.material.button.MaterialButton;
 public class BottomSheetSelectModel extends BottomSheetDialogFragment {
 
     public interface OnModelSelectedListener {
-        void onModelSelected(boolean isOnlyChars);
+        void onModelSelected(String models);
     }
 
     private OnModelSelectedListener listener;
@@ -34,26 +34,39 @@ public class BottomSheetSelectModel extends BottomSheetDialogFragment {
         // 設置選項的按鈕
         MaterialButton option1 = view.findViewById(R.id.mbtn_only_chars);
         MaterialButton option2 = view.findViewById(R.id.mbtn_only_numbers);
+        MaterialButton option3 = view.findViewById(R.id.mbtn_mix);
         SharedPreferences prefs = requireActivity().getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        boolean is_only_chars = prefs.getBoolean("is_only_chars", false);
+        String models = prefs.getString("models", "lowerLetter.onnx");
 
-        if (is_only_chars) {
+        if (models.equals("lowerLetter.onnx")) {
             option1.setIconTint(ColorStateList.valueOf(Color.BLACK));
             option2.setIconTint(ColorStateList.valueOf(Color.WHITE));
-        } else {
+            option3.setIconTint(ColorStateList.valueOf(Color.WHITE));
+        } else if (models.equals("digit.onnx")){
             option1.setIconTint(ColorStateList.valueOf(Color.WHITE));
             option2.setIconTint(ColorStateList.valueOf(Color.BLACK));
+            option3.setIconTint(ColorStateList.valueOf(Color.WHITE));
+        } else {
+            option1.setIconTint(ColorStateList.valueOf(Color.WHITE));
+            option2.setIconTint(ColorStateList.valueOf(Color.WHITE));
+            option3.setIconTint(ColorStateList.valueOf(Color.BLACK));
         }
 
         option1.setOnClickListener(v -> {
-            prefs.edit().putBoolean("is_only_chars", true).apply();
-            if (listener != null) listener.onModelSelected(true);
+            prefs.edit().putString("models", "lowerLetter.onnx").apply();
+            if (listener != null) listener.onModelSelected("lowerLetter.onnx");
             dismiss();
         });
 
         option2.setOnClickListener(v -> {
-            prefs.edit().putBoolean("is_only_chars", false).apply();
-            if (listener != null) listener.onModelSelected(false);
+            prefs.edit().putString("models", "digit.onnx").apply();
+            if (listener != null) listener.onModelSelected("digit.onnx");
+            dismiss();  // 關閉底部彈出選單
+        });
+
+        option3.setOnClickListener(v -> {
+            prefs.edit().putString("models", "mix_digit-lowerLetter.onnx").apply();
+            if (listener != null) listener.onModelSelected("mix_digit-lowerLetter.onnx");
             dismiss();  // 關閉底部彈出選單
         });
 

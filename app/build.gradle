@@ -58,4 +58,6 @@ dependencies {
     implementation "androidx.camera:camera-lifecycle:${cameraxVersion}"
     implementation "androidx.camera:camera-video:${cameraxVersion}"
     implementation "androidx.camera:camera-view:${cameraxVersion}"
+
+    implementation 'com.microsoft.onnxruntime:onnxruntime-android:1.16.3'
 }

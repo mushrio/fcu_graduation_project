@@ -9,8 +9,8 @@
 
     <LinearLayout
         android:id="@+id/ll_bottom_sheet_model"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="412dp"
+        android:layout_height="180dp"
         android:background="@color/white"
         android:orientation="vertical"
         android:padding="16dp"
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
             android:gravity="center_vertical"
-            android:text="ABC 純英文"
+            android:text="ABC  純英文"
             android:textColor="@color/black"
             android:visibility="visible"
             app:icon="@drawable/baseline_check_24"
@@ -37,6 +37,17 @@
             android:backgroundTint="@color/white"
             android:gravity="center_vertical"
             android:text="123  純數字"
+            android:textColor="@color/black"
+            app:icon="@drawable/baseline_check_24"
+            app:iconTint="#000000" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mbtn_mix"
+            android:layout_width="411dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:gravity="center_vertical"
+            android:text="AB12  英數混合"
             android:textColor="@color/black"
             app:icon="@drawable/baseline_check_24"
             app:iconTint="#000000" />
