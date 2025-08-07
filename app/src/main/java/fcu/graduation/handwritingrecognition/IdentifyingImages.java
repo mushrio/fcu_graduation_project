@@ -26,7 +26,6 @@ public class IdentifyingImages extends AppCompatActivity {
 
     ProgressBar loadingCircle;
     ArrayList<Uri> imageUris = new ArrayList<>();
-    ArrayList<String> processedUris = new ArrayList<>();
     ArrayList<String> recognizedStrings = new ArrayList<>();
     TextView loadingNum;
     Bitmap templateBitmap;
@@ -83,8 +82,8 @@ public class IdentifyingImages extends AppCompatActivity {
             Intent intent = new Intent(IdentifyingImages.this, IdentifyResult.class);
             intent.putExtra("image_uri", getIntent().getStringExtra("image_uri"));
             intent.putExtra("processed_template", getIntent().getStringExtra("processed_template"));
-            intent.putStringArrayListExtra("processed_uris", processedUris);
             intent.putStringArrayListExtra("image_uris", getIntent().getStringArrayListExtra("image_uris"));
+            intent.putStringArrayListExtra("recognized_strings", recognizedStrings);
             startActivity(intent);
             finish();
             return;
@@ -124,14 +123,12 @@ public class IdentifyingImages extends AppCompatActivity {
 
                 // 回到主執行緒繼續處理下一張
                 new Handler(Looper.getMainLooper()).post(() -> {
-                    processedUris.add(currentUri.toString());
                     imageProcessing(index + 1);
                 });
             } catch (Exception e) {
                 Log.e("ErrorCheck", "Exception in imageProcessing: ", e);
                 new Handler(Looper.getMainLooper()).post(() -> {
                     // 跳過這張
-                    processedUris.add(imageUris.get(index).toString());
                     imageProcessing(index + 1);
                 });
             }
