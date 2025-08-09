@@ -93,6 +93,7 @@ public class IdentifyingImages extends AppCompatActivity {
 
         new Thread(() -> {
             try {
+                int stringCounts = 0;
                 Uri currentUri = imageUris.get(index);
                 Bitmap pickedBitmap = ImageUtils.getBitmapFromUri(this, currentUri);
                 Log.d("DebugCheck", "Bitmap loaded for index " + index);
@@ -116,9 +117,16 @@ public class IdentifyingImages extends AppCompatActivity {
                         }
                         recognizedStrings.add(finalResult.toString());
                         finalResult.setLength(0);
+                        stringCounts++;
                     }
                     Log.d("FinalString", "Recognized text: " + finalResult.toString());
                     Log.d("recognizedStrings", "Recognized text: " + recognizedStrings);
+
+                    // 當一張圖的字串數量未滿表格數量時，繼續加空字串進去，方便後面多張結果顯示處理
+                    while (stringCounts < (tableLineCols.length - 1) * (tableLineRows.length - 1)) {
+                        recognizedStrings.add("");
+                        stringCounts++;
+                    }
                 }
 
                 // 回到主執行緒繼續處理下一張

@@ -16,6 +16,7 @@ import java.util.List;
 
 import fcu.graduation.handwritingrecognition.adapter.MyTableAdapter;
 import fcu.graduation.handwritingrecognition.holder.TemplateDataHolder;
+import fcu.graduation.handwritingrecognition.listener.MyTableListener;
 import fcu.graduation.handwritingrecognition.model.Cell;
 import fcu.graduation.handwritingrecognition.model.ColumnHeader;
 import fcu.graduation.handwritingrecognition.model.RowHeader;
@@ -24,12 +25,14 @@ public class IdentifyResult extends AppCompatActivity {
 
     TableView tableView;
     MyTableAdapter adapter;
+    MyTableListener listener;
     MaterialButton mbtnLastPage;
     MaterialButton mbtnNextPage;
     MaterialButton mbtnSaveResult;
     ArrayList<Uri> originalImageUris = new ArrayList<>();
-    private int index = 0;
+    private int imageIndex = 0;
     private final int columnCount = TemplateDataHolder.getInstance().getTableLineCols().length - 1;
+    private final int rowCount = TemplateDataHolder.getInstance().getTableLineRows().length - 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +44,12 @@ public class IdentifyResult extends AppCompatActivity {
         mbtnNextPage = findViewById(R.id.mbtn_next_page);
         mbtnSaveResult = findViewById(R.id.mbtn_save_result);
 
-        adapter = new MyTableAdapter(this);
-        tableView.setAdapter(adapter);
-
         ArrayList<String> uriStrings = getIntent().getStringArrayListExtra("image_uris");
         ArrayList<String> recognizedStrings = getIntent().getStringArrayListExtra("recognized_strings");
+
+        adapter = new MyTableAdapter(this);
+        tableView.setAdapter(adapter);
+        tableView.setTableViewListener(new MyTableListener(tableView, recognizedStrings));
 
         // 產生資料
         List<ColumnHeader> columnHeaders = new ArrayList<>();
@@ -54,10 +58,12 @@ public class IdentifyResult extends AppCompatActivity {
         }
 
         List<RowHeader> rowHeaders = new ArrayList<>();
-        List<List<Cell>> cellList = new ArrayList<>();
+        for (int i = 0; i < rowCount; i++) {
+            rowHeaders.add(new RowHeader("列 " + (i + 1)));
+        }
 
-        for (int row = 0; row < recognizedStrings.size() / columnCount; row++) {
-            rowHeaders.add(new RowHeader("列 " + (row + 1)));
+        List<List<Cell>> cellList = new ArrayList<>();
+        for (int row = imageIndex * rowCount; row < imageIndex * rowCount + rowCount; row++) {
 
             List<Cell> cellRow = new ArrayList<>();
             for (int col = 0; col < columnCount; col++) {
@@ -69,10 +75,6 @@ public class IdentifyResult extends AppCompatActivity {
 
         adapter.setAllItems(columnHeaders, rowHeaders, cellList);
 
-
-
-
-
         if (uriStrings != null) {
             for (String uriStr : uriStrings) {
                 originalImageUris.add(Uri.parse(uriStr));
@@ -82,9 +84,9 @@ public class IdentifyResult extends AppCompatActivity {
         mbtnLastPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (index != 0) {
-                    index -= 1;
-
+                if (imageIndex != 0) {
+                    imageIndex -= 1;
+                    changeCellData(recognizedStrings);
                 }
             }
         });
@@ -92,9 +94,9 @@ public class IdentifyResult extends AppCompatActivity {
         mbtnNextPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (index != uriStrings.size() - 1) {
-                    index += 1;
-
+                if (imageIndex != uriStrings.size() - 1) {
+                    imageIndex += 1;
+                    changeCellData(recognizedStrings);
                 }
             }
         });
@@ -110,5 +112,25 @@ public class IdentifyResult extends AppCompatActivity {
                 saveFile.show(getSupportFragmentManager(), saveFile.getTag());
             }
         });
+    }
+
+    private void changeCellData(ArrayList<String> recognizedStrings) {
+        List<List<Cell>> cellList = new ArrayList<>();
+        for (int row = imageIndex * rowCount; row < imageIndex * rowCount + rowCount; row++) {
+
+            List<Cell> cellRow = new ArrayList<>();
+            for (int col = 0; col < columnCount; col++) {
+                String value = recognizedStrings.get(row * columnCount + col);
+                cellRow.add(new Cell(value));
+            }
+            cellList.add(cellRow);
+        }
+
+        adapter.setCellItems(cellList);
+        adapter.notifyDataSetChanged();
+    }
+
+    public int getImageIndex() {
+        return imageIndex;
     }
 }

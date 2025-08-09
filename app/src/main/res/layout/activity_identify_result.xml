@@ -18,7 +18,8 @@
         app:layout_constraintBottom_toTopOf="@+id/mbtn_last_page"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_identified_image" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_identified_image"
+        app:allow_click_inside_cell="true" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/mbtn_last_page"
