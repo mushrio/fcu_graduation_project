@@ -1,14 +1,16 @@
 package fcu.graduation.handwritingrecognition;
 
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.evrencoskun.tableview.TableView;
+import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
@@ -23,9 +25,10 @@ import fcu.graduation.handwritingrecognition.model.RowHeader;
 
 public class IdentifyResult extends AppCompatActivity {
 
+    ImageView ivOriginalImage;
+    TextView tvIdentifiedImage;
     TableView tableView;
     MyTableAdapter adapter;
-    MyTableListener listener;
     MaterialButton mbtnLastPage;
     MaterialButton mbtnNextPage;
     MaterialButton mbtnSaveResult;
@@ -39,6 +42,8 @@ public class IdentifyResult extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_identify_result);
 
+        ivOriginalImage = findViewById(R.id.iv_original_image);
+        tvIdentifiedImage = findViewById(R.id.tv_identified_image);
         tableView = findViewById(R.id.table_view);
         mbtnLastPage = findViewById(R.id.mbtn_last_page);
         mbtnNextPage = findViewById(R.id.mbtn_next_page);
@@ -81,37 +86,47 @@ public class IdentifyResult extends AppCompatActivity {
             }
         }
 
-        mbtnLastPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (imageIndex != 0) {
-                    imageIndex -= 1;
-                    changeCellData(recognizedStrings);
-                }
+        ivOriginalImage.setOnClickListener(v -> {
+            Uri uri = originalImageUris.get(imageIndex);
+            showZoomableImage(uri);
+        });
+
+        mbtnLastPage.setOnClickListener(v -> {
+            if (imageIndex != 0) {
+                imageIndex -= 1;
+                changeCellData(recognizedStrings);
+                tvIdentifiedImage.setText("辨識結果：" + (imageIndex + 1));
             }
         });
 
-        mbtnNextPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (imageIndex != uriStrings.size() - 1) {
-                    imageIndex += 1;
-                    changeCellData(recognizedStrings);
-                }
+        mbtnNextPage.setOnClickListener(v -> {
+            if (imageIndex != uriStrings.size() - 1) {
+                imageIndex += 1;
+                changeCellData(recognizedStrings);
+                tvIdentifiedImage.setText("辨識結果：" + (imageIndex + 1));
             }
         });
 
-        mbtnSaveResult.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BottomSheetSaveFile saveFile = new BottomSheetSaveFile();
-                Bundle bundle = new Bundle();
-                bundle.putString("image_uri", getIntent().getStringExtra("image_uri"));
-                bundle.putString("processed_template", getIntent().getStringExtra("processed_template"));
-                saveFile.setArguments(bundle);
-                saveFile.show(getSupportFragmentManager(), saveFile.getTag());
-            }
+        mbtnSaveResult.setOnClickListener(v -> {
+            BottomSheetSaveFile saveFile = new BottomSheetSaveFile();
+            Bundle bundle = new Bundle();
+            bundle.putString("image_uri", getIntent().getStringExtra("image_uri"));
+            bundle.putString("processed_template", getIntent().getStringExtra("processed_template"));
+            saveFile.setArguments(bundle);
+            saveFile.show(getSupportFragmentManager(), saveFile.getTag());
         });
+    }
+
+    private void showZoomableImage(Uri uri) {
+        Dialog dialog = new Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+        dialog.setContentView(R.layout.dialog_zoomable_image);
+
+        PhotoView photoView = dialog.findViewById(R.id.photoView);
+        photoView.setImageURI(uri);
+
+        photoView.setOnClickListener(v -> dialog.dismiss()); // 點擊圖片關閉
+
+        dialog.show();
     }
 
     private void changeCellData(ArrayList<String> recognizedStrings) {
