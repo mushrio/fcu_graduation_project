@@ -9,17 +9,14 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.camera.core.processing.SurfaceProcessorNode;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.button.MaterialButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+
+import fcu.graduation.handwritingrecognition.holder.TemplateDataHolder;
 
 public class SaveSuccess extends AppCompatActivity {
 
@@ -68,18 +65,21 @@ public class SaveSuccess extends AppCompatActivity {
         mbtnSelectOtherFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SaveSuccess.this, SelectIdentifyRange.class);
+                Intent intent = new Intent(SaveSuccess.this, SelectIdentifyModel.class);
                 intent.putExtra("image_uri", getIntent().getStringExtra("image_uri"));
                 intent.putExtra("processed_template", getIntent().getStringExtra("processed_template"));
                 startActivity(intent);
+                finish();
             }
         });
 
         mbtnBackToMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TemplateDataHolder.getInstance().clear();
                 Intent intent = new Intent(SaveSuccess.this, MainActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

@@ -38,7 +38,7 @@ public class IdentifyingTemplate extends AppCompatActivity {
         imageUriString = getIntent().getStringExtra("image_uri");
         Uri imageUri = Uri.parse(imageUriString);
 
-        intent = new Intent(this, SelectIdentifyRange.class);
+        intent = new Intent(this, SelectIdentifyModel.class);
         intent.putExtra("image_uri", imageUriString);
 
         new Thread(() -> {

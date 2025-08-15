@@ -55,7 +55,7 @@
             android:name=".BottomSheetSelectModel"
             android:exported="false" />
         <activity
-            android:name=".SelectIdentifyRange"
+            android:name=".SelectIdentifyModel"
             android:exported="false" />
         <activity
             android:name=".ConfirmPhoto"
