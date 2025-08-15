@@ -21,6 +21,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import fcu.graduation.handwritingrecognition.holder.TemplateDataHolder;
+import fcu.graduation.handwritingrecognition.utils.ImageUtils;
 
 public class IdentifyingImages extends AppCompatActivity {
 

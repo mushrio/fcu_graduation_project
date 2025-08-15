@@ -14,9 +14,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import fcu.graduation.handwritingrecognition.holder.TemplateDataHolder;
+import fcu.graduation.handwritingrecognition.utils.ImageUtils;
 
 public class IdentifyingTemplate extends AppCompatActivity {
 

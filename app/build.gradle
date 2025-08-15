@@ -13,6 +13,7 @@ android {
         targetSdk 35
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -64,4 +65,19 @@ dependencies {
     implementation 'com.github.evrencoskun:TableView:v0.8.9.4'
 
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+
+    implementation 'org.apache.poi:poi:3.17'
+    implementation('org.apache.poi:poi-ooxml:3.17') {
+        exclude group: 'org.apache.xmlbeans', module: 'xmlbeans'
+    }
+    implementation 'commons-collections:commons-collections:3.2.2'
+    implementation 'org.apache.xmlbeans:xmlbeans:3.1.0'
+
+    // StAX API
+    implementation 'javax.xml.stream:stax-api:1.0-2'
+
+    // StAX 實作（Woodstox，比較穩）
+    implementation 'com.fasterxml.woodstox:woodstox-core:6.5.1'
+
+
 }

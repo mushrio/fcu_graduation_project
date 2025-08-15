@@ -34,8 +34,8 @@ public class IdentifyResult extends AppCompatActivity {
     MaterialButton mbtnSaveResult;
     ArrayList<Uri> originalImageUris = new ArrayList<>();
     private int imageIndex = 0;
-    private final int columnCount = TemplateDataHolder.getInstance().getTableLineCols().length - 1;
-    private final int rowCount = TemplateDataHolder.getInstance().getTableLineRows().length - 1;
+    private int columnCount;
+    private int rowCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +49,11 @@ public class IdentifyResult extends AppCompatActivity {
         mbtnNextPage = findViewById(R.id.mbtn_next_page);
         mbtnSaveResult = findViewById(R.id.mbtn_save_result);
 
+        columnCount = TemplateDataHolder.getInstance().getTableLineCols().length - 1;
+        rowCount = TemplateDataHolder.getInstance().getTableLineRows().length - 1;
+
         ArrayList<String> uriStrings = getIntent().getStringArrayListExtra("image_uris");
         ArrayList<String> recognizedStrings = getIntent().getStringArrayListExtra("recognized_strings");
-
-        adapter = new MyTableAdapter(this);
-        tableView.setAdapter(adapter);
-        tableView.setTableViewListener(new MyTableListener(tableView, recognizedStrings));
 
         // 產生資料
         List<ColumnHeader> columnHeaders = new ArrayList<>();
@@ -78,6 +77,9 @@ public class IdentifyResult extends AppCompatActivity {
             cellList.add(cellRow);
         }
 
+        adapter = new MyTableAdapter(this);
+        tableView.setAdapter(adapter);
+        tableView.setTableViewListener(new MyTableListener(tableView, recognizedStrings, columnHeaders, rowHeaders));
         adapter.setAllItems(columnHeaders, rowHeaders, cellList);
 
         if (uriStrings != null) {
@@ -112,6 +114,20 @@ public class IdentifyResult extends AppCompatActivity {
             Bundle bundle = new Bundle();
             bundle.putString("image_uri", getIntent().getStringExtra("image_uri"));
             bundle.putString("processed_template", getIntent().getStringExtra("processed_template"));
+            bundle.putInt("image_count", uriStrings.size());
+            bundle.putStringArrayList("recognized_strings", recognizedStrings);
+
+            ArrayList<String> editedColumnHeaders = new ArrayList<>();
+            for (int i = 0; i < columnCount; i++) {
+                editedColumnHeaders.add(columnHeaders.get(i).getTitle());
+            }
+            ArrayList<String> editedRowHeaders = new ArrayList<>();
+            for (int i = 0; i < rowCount; i++) {
+                editedRowHeaders.add(rowHeaders.get(i).getTitle());
+            }
+            bundle.putStringArrayList("edited_column_headers", editedColumnHeaders);
+            bundle.putStringArrayList("edited_row_headers", editedRowHeaders);
+
             saveFile.setArguments(bundle);
             saveFile.show(getSupportFragmentManager(), saveFile.getTag());
         });

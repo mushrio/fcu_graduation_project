@@ -1,4 +1,4 @@
-package fcu.graduation.handwritingrecognition;
+package fcu.graduation.handwritingrecognition.utils;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -42,7 +42,7 @@ public class ImageUtils {
                     return img;
             }
         } catch (IOException e) {
-            Log.e("fcu.graduation.handwritingrecognition.ImageUtils", "Error reading EXIF data", e);
+            Log.e("fcu.graduation.handwritingrecognition.utils.ImageUtils", "Error reading EXIF data", e);
             return img;
         }
     }

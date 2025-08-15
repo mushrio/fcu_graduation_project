@@ -17,6 +17,14 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+
+import fcu.graduation.handwritingrecognition.utils.CsvUtils;
+import fcu.graduation.handwritingrecognition.utils.ExcelUtils;
+
 public class BottomSheetSaveFile extends BottomSheetDialogFragment {
 
     @Override
@@ -48,6 +56,16 @@ public class BottomSheetSaveFile extends BottomSheetDialogFragment {
                     // 例如呼叫 Activity 的方法來處理儲存
                     String imageUriString = getArguments() != null ? getArguments().getString("image_uri") : null;
                     String templateUriString = getArguments() != null ? getArguments().getString("processed_template") : null;
+                    int imageCount = getArguments() != null ? getArguments().getInt("image_count") : 0;
+                    ArrayList<String> recognizedStrings = getArguments() != null ? getArguments().getStringArrayList("recognized_strings") : null;
+                    ArrayList<String> editedColumnHeaders = getArguments() != null ? getArguments().getStringArrayList("edited_column_headers") : null;
+                    ArrayList<String> editedRowHeaders = getArguments() != null ? getArguments().getStringArrayList("edited_row_headers") : null;
+
+                    if (fileType.equals("CSV")) {
+                        new CsvUtils().writeCsv(requireContext(), recognizedStrings, editedColumnHeaders, editedRowHeaders, new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date()) + "辨識結果.csv", imageCount);
+                    } else {
+                        new ExcelUtils().writeExcel(requireContext(), recognizedStrings, editedColumnHeaders, editedRowHeaders, new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date()) + "辨識結果.xlsx", imageCount);
+                    }
 
                     Intent intent = new Intent(getActivity(), SaveSuccess.class);
                     intent.putExtra("image_uri", imageUriString);

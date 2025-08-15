@@ -9,6 +9,8 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import fcu.graduation.handwritingrecognition.utils.ImageUtils;
+
 public class ConfirmPhoto extends AppCompatActivity {
 
     private ImageView ivPhoto;
