@@ -43,12 +43,6 @@
             android:name=".SaveSuccess"
             android:exported="false" />
         <activity
-            android:name=".SaveConfirm"
-            android:exported="false" />
-        <activity
-            android:name=".BottomSheetSaveFile"
-            android:exported="false" />
-        <activity
             android:name=".IdentifyResult"
             android:exported="false" />
         <activity
@@ -56,9 +50,6 @@
             android:exported="false" />
         <activity
             android:name=".TakeSeveralPhotos"
-            android:exported="false" />
-        <activity
-            android:name=".BottomSheetSelectModel"
             android:exported="false" />
         <activity
             android:name=".SelectIdentifyModel"
