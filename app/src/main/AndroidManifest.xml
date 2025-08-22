@@ -20,6 +20,9 @@
         android:theme="@style/Theme.HandwritingRecognition"
         tools:targetApi="31">
         <activity
+            android:name=".ClippingTemplate"
+            android:exported="false" />
+        <activity
             android:name=".IdentifyingTemplate"
             android:exported="false" />
 
@@ -33,6 +36,9 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <activity
+            android:name=".SelectIdentifyRange"
+            android:exported="false" />
         <activity
             android:name=".SaveSuccess"
             android:exported="false" />

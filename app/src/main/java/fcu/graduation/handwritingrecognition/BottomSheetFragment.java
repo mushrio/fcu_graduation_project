@@ -45,7 +45,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                         Log.d("BottomSheetFragment", "Selected Image URI: " + selectedImageUri);
 
                         // 傳遞 Uri 到下個 Activity
-                        Intent intent = new Intent(getActivity(), IdentifyingTemplate.class);
+                        Intent intent = new Intent(getActivity(), ClippingTemplate.class);
                         intent.putExtra("image_uri", selectedImageUri.toString()); // 傳遞 Uri 字符串
                         startActivity(intent);
 
