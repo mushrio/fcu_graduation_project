@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.CameraSelector;
@@ -19,9 +18,6 @@ import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -44,10 +40,10 @@ public class TakeSeveralPhotos extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_take_serveral_photos);
+        setContentView(R.layout.activity_take_several_photos);
 
         pvvSeveralPhotos = findViewById(R.id.pvv_several_photos);
-        mbtnTakeSeveralPhotos = findViewById(R.id.mbtn_take_serveral_photos);
+        mbtnTakeSeveralPhotos = findViewById(R.id.mbtn_take_several_photos);
         mbtnTakePhotoComplete = findViewById(R.id.mbtn_take_photo_complete);
         tvPhotoed = findViewById(R.id.tv_photoed);
 

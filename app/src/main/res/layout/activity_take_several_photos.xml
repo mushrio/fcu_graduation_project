@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TakeServeralPhotos">
+    tools:context=".TakeSeveralPhotos">
 
     <androidx.camera.view.PreviewView
         android:id="@+id/pvv_several_photos"
@@ -30,7 +30,7 @@
         app:layout_constraintTop_toTopOf="@id/pvv_several_photos" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/mbtn_take_serveral_photos"
+        android:id="@+id/mbtn_take_several_photos"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginStart="16dp"
@@ -69,7 +69,7 @@
         android:layout_height="wrap_content"
         android:text="已拍攝0張照片"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/mbtn_take_serveral_photos"
+        app:layout_constraintBottom_toTopOf="@+id/mbtn_take_several_photos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
