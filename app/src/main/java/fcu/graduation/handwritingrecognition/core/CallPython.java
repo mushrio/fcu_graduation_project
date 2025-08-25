@@ -1,4 +1,4 @@
-package fcu.graduation.handwritingrecognition;
+package fcu.graduation.handwritingrecognition.core;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

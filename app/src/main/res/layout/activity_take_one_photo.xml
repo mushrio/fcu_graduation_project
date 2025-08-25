@@ -20,6 +20,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <fcu.graduation.handwritingrecognition.widget.OverlayView
+        android:id="@+id/overlay_view_1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/pvv_one_photo"
+        app:layout_constraintEnd_toEndOf="@+id/pvv_one_photo"
+        app:layout_constraintStart_toStartOf="@+id/pvv_one_photo"
+        app:layout_constraintTop_toTopOf="@+id/pvv_one_photo" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/mbtn_take_one_photo"
         android:layout_width="0dp"

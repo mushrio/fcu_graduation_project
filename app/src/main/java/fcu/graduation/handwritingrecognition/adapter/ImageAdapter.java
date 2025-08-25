@@ -1,4 +1,4 @@
-package fcu.graduation.handwritingrecognition;
+package fcu.graduation.handwritingrecognition.adapter;
 
 import android.content.Context;
 import android.net.Uri;
@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+
+import fcu.graduation.handwritingrecognition.R;
 
 public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int VIEW_TYPE_IMAGE = 1;

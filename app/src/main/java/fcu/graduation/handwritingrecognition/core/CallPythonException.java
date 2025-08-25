@@ -1,4 +1,4 @@
-package fcu.graduation.handwritingrecognition;
+package fcu.graduation.handwritingrecognition.core;
 
 public class CallPythonException extends RuntimeException {
     public CallPythonException(String message) {

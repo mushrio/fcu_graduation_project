@@ -17,6 +17,9 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
+import fcu.graduation.handwritingrecognition.adapter.ImageAdapter;
+import fcu.graduation.handwritingrecognition.core.CallPython;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override

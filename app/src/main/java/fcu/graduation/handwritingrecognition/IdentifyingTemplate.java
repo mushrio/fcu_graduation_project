@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.IOException;
 import java.util.Arrays;
 
+import fcu.graduation.handwritingrecognition.core.CallPython;
 import fcu.graduation.handwritingrecognition.holder.TemplateDataHolder;
 
 public class IdentifyingTemplate extends AppCompatActivity {
