@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import fcu.graduation.handwritingrecognition.holder.TemplateDataHolder;
@@ -40,26 +41,29 @@ public class CsvUtils {
                 }
 
                 if (outputStream != null) {
+                    // 加入 UTF-8 BOM 確保中文可以正常顯示
+                    outputStream.write(new byte[]{(byte)0xEF, (byte)0xBB, (byte)0xBF});
+
                     for (int i = 0; i < imageCount; i++) {
-                        outputStream.write(("id" + i + ",").getBytes());
+                        outputStream.write(("id" + i + ",").getBytes(StandardCharsets.UTF_8));
                         for (String header : columnHeaders) {
-                            outputStream.write(header.getBytes());
-                            outputStream.write(",".getBytes());
+                            outputStream.write(header.getBytes(StandardCharsets.UTF_8));
+                            outputStream.write(",".getBytes(StandardCharsets.UTF_8));
                         }
-                        outputStream.write("\n".getBytes());
+                        outputStream.write("\n".getBytes(StandardCharsets.UTF_8));
 
                         for (int j = 0; j < rowCount; j++) {
-                            outputStream.write(rowHeaders.get(j).getBytes());
-                            outputStream.write(",".getBytes());
+                            outputStream.write(rowHeaders.get(j).getBytes(StandardCharsets.UTF_8));
+                            outputStream.write(",".getBytes(StandardCharsets.UTF_8));
 
                             for (int k = 0; k < columnCount; k++) {
                                 outputStream.write(data.get(i * rowCount * columnCount + j * columnCount + k).getBytes());
                                 if (k < columnCount - 1)
-                                    outputStream.write(",".getBytes());
+                                    outputStream.write(",".getBytes(StandardCharsets.UTF_8));
                             }
-                            outputStream.write("\n".getBytes());
+                            outputStream.write("\n".getBytes(StandardCharsets.UTF_8));
                         }
-                        outputStream.write("\n".getBytes());
+                        outputStream.write("\n".getBytes(StandardCharsets.UTF_8));
                     }
 
                     outputStream.flush();
