@@ -83,8 +83,6 @@ public class IdentifyingImages extends AppCompatActivity {
             // 所有圖片都處理完了
             Log.d("DebugCheck", "All images processed. Moving to IdentifyResult...");
             Intent intent = new Intent(IdentifyingImages.this, IdentifyResult.class);
-            intent.putExtra("image_uri", getIntent().getStringExtra("image_uri"));
-            intent.putExtra("processed_template", getIntent().getStringExtra("processed_template"));
             intent.putStringArrayListExtra("image_uris", getIntent().getStringArrayListExtra("image_uris"));
             intent.putStringArrayListExtra("recognized_strings", recognizedStrings);
             startActivity(intent);

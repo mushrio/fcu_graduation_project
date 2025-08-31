@@ -54,8 +54,6 @@ public class BottomSheetSaveFile extends BottomSheetDialogFragment {
                 .setPositiveButton("確定", (dialog, which) -> {
                     // 執行儲存邏輯
                     // 例如呼叫 Activity 的方法來處理儲存
-                    String imageUriString = getArguments() != null ? getArguments().getString("image_uri") : null;
-                    String templateUriString = getArguments() != null ? getArguments().getString("processed_template") : null;
                     int imageCount = getArguments() != null ? getArguments().getInt("image_count") : 0;
                     ArrayList<String> recognizedStrings = getArguments() != null ? getArguments().getStringArrayList("recognized_strings") : null;
                     ArrayList<String> editedColumnHeaders = getArguments() != null ? getArguments().getStringArrayList("edited_column_headers") : null;
@@ -68,8 +66,6 @@ public class BottomSheetSaveFile extends BottomSheetDialogFragment {
                     }
 
                     Intent intent = new Intent(getActivity(), SaveSuccess.class);
-                    intent.putExtra("image_uri", imageUriString);
-                    intent.putExtra("processed_template", templateUriString);
                     startActivity(intent);
 
                     if (isAdded()) {

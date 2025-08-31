@@ -79,5 +79,5 @@ dependencies {
     // StAX 實作（Woodstox，比較穩）
     implementation 'com.fasterxml.woodstox:woodstox-core:6.5.1'
 
-
+    implementation 'com.google.code.gson:gson:2.13.1'
 }

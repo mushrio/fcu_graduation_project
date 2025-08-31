@@ -4,9 +4,12 @@ import android.content.Context;
 import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.apache.xmlbeans.impl.xb.xmlconfig.Extensionconfig;
 
 import java.util.List;
 
@@ -15,12 +18,18 @@ import fcu.graduation.handwritingrecognition.R;
 public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int VIEW_TYPE_IMAGE = 1;
     private static final int VIEW_TYPE_NO_HISTORY = 2;
+    private final OnItemClickListener listener;
     private List<Uri> imageList;
     private Context context;
 
-    public ImageAdapter(Context context, List<Uri> imageList) {
+    public interface OnItemClickListener {
+        void onItemClick(Uri uri, int position);
+    }
+
+    public ImageAdapter(Context context, List<Uri> imageList, OnItemClickListener listener) {
         this.context = context;
         this.imageList = imageList;
+        this.listener = listener;
     }
 
     @Override
@@ -56,6 +65,11 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             ((ImageViewHolder) holder).imageView.setImageURI(imageUri);
         }
         // NoHistoryViewHolder 不需要 onBind，因為一開始就設好圖片了
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null && !imageList.isEmpty()) {
+                listener.onItemClick(imageList.get(position), position);
+            }
+        });
     }
 
     @Override

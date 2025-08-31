@@ -71,8 +71,6 @@ public class TakeSeveralPhotos extends AppCompatActivity {
 
                 Intent intent = new Intent(TakeSeveralPhotos.this, IdentifyingImages.class);
                 intent.putStringArrayListExtra("image_uris", uriStrings);
-                intent.putExtra("image_uri", getIntent().getStringExtra("image_uri"));
-                intent.putExtra("processed_template", getIntent().getStringExtra("processed_template"));
                 startActivity(intent);
             }
         });

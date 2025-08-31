@@ -53,13 +53,8 @@ public class BottomSheetPhotoOrImage extends BottomSheetDialogFragment {
                         }
 
                         // ✅ 傳 ArrayList<String> 到下個 activity
-                        String imageUriString = getArguments() != null ? getArguments().getString("image_uri") : null;
-                        String templateUriString = getArguments() != null ? getArguments().getString("processed_template") : null;
-
                         Intent intent = new Intent(getActivity(), IdentifyingImages.class);
                         intent.putStringArrayListExtra("image_uris", new ArrayList<>(uriList));
-                        intent.putExtra("image_uri", imageUriString);
-                        intent.putExtra("processed_template", templateUriString);
                         startActivity(intent);
 
                         if (isAdded()) {
@@ -79,12 +74,7 @@ public class BottomSheetPhotoOrImage extends BottomSheetDialogFragment {
         MaterialButton option2 = view.findViewById(R.id.mbtn_image_box);
 
         option1.setOnClickListener(v -> {
-            String imageUriString = getArguments() != null ? getArguments().getString("image_uri") : null;
-            String templateUriString = getArguments() != null ? getArguments().getString("processed_template") : null;
-
             Intent intent = new Intent(getActivity(), TakeSeveralPhotos.class);
-            intent.putExtra("image_uri", imageUriString);
-            intent.putExtra("processed_template", templateUriString);
             startActivity(intent);
             dismiss();
         });

@@ -32,8 +32,6 @@ public class SelectIdentifyRange extends AppCompatActivity {
         ivSelectRange = findViewById(R.id.iv_select_range);
         mbtnRangeConfirmed = findViewById(R.id.mbtn_range_confirmed);
 
-        String imageUriString = getIntent().getStringExtra("image_uri");
-        Uri imageUri = Uri.parse(imageUriString);
         Bitmap bitmap = TemplateDataHolder.getInstance().getProcessedTemplate();
 
         double width = bitmap.getWidth(), height = bitmap.getHeight();
@@ -59,7 +57,6 @@ public class SelectIdentifyRange extends AppCompatActivity {
                 Toast.makeText(this, "請先選取範圍", Toast.LENGTH_SHORT).show();
             } else {
                 Intent intent = new Intent(this, IdentifyingTemplate.class);
-                intent.putExtra("image_uri", imageUriString);
                 intent.putExtra("coordinates", coordinates);
                 startActivity(intent);
                 finish();

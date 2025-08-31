@@ -97,5 +97,23 @@ public final class ImageSaver {
 
         return imageUri;
     }
+
+    public static Uri saveBitmapToApp(Context context, Bitmap bitmap, String displayName) {
+        File dir = new File(context.getFilesDir(), "hidden_images");
+        if (!dir.exists())
+            dir.mkdirs();
+
+        File file = new File(dir, displayName + ".png");
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return Uri.fromFile(file);
+    }
 }
 

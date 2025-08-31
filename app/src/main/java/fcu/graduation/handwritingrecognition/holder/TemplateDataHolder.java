@@ -6,7 +6,8 @@ public class TemplateDataHolder {
 
     private static TemplateDataHolder instance;
 
-    private Bitmap processedTemplate;  // 圖片
+    private Bitmap processedTemplate;  // 剪裁後的圖片
+    private Bitmap drawnTemplate;  // 畫線後的圖片
     private int[] tableLineRows;
     private int[] tableLineCols;
 
@@ -28,6 +29,14 @@ public class TemplateDataHolder {
 
     public Bitmap getProcessedTemplate() {
         return this.processedTemplate;
+    }
+
+    public void setDrawnTemplate(Bitmap drawnTemplate) {
+        this.drawnTemplate = drawnTemplate;
+    }
+
+    public Bitmap getDrawnTemplate() {
+        return this.drawnTemplate;
     }
 
     // Getter 和 Setter for tableLineRows

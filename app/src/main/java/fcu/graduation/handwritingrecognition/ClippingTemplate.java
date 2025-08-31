@@ -48,7 +48,6 @@ public class ClippingTemplate extends AppCompatActivity {
             TemplateDataHolder.getInstance().setProcessedTemplate(processedBitmap);
 
             Intent intent = new Intent(ClippingTemplate.this, SelectIdentifyRange.class);
-            intent.putExtra("image_uri", getIntent().getStringExtra("image_uri"));
             startActivity(intent);
             finish();
         }).start();

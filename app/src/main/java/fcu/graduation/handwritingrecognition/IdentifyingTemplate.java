@@ -15,16 +15,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 import fcu.graduation.handwritingrecognition.core.CallPython;
 import fcu.graduation.handwritingrecognition.holder.TemplateDataHolder;
+import fcu.graduation.handwritingrecognition.model.History;
+import fcu.graduation.handwritingrecognition.model.TableLines;
+import fcu.graduation.handwritingrecognition.utils.LocalHistoryUtils;
 
 public class IdentifyingTemplate extends AppCompatActivity {
 
     private ProgressBar loadingCircle;
-
-    private String imageUriString;
-
     private Intent intent;
     private int[] coordinates = new int[4];
 
@@ -37,15 +39,12 @@ public class IdentifyingTemplate extends AppCompatActivity {
         loadingCircle = findViewById(R.id.pb_loading_template);
         loadingCircle.setVisibility(View.VISIBLE);
 
-        imageUriString = getIntent().getStringExtra("image_uri");
-
         coordinates = getIntent().getIntArrayExtra("coordinates");
 
         intent = new Intent(this, SelectIdentifyModel.class);
-        intent.putExtra("image_uri", imageUriString);
 
         new Thread(() -> {
-            Bitmap bitmap = TemplateDataHolder.getInstance().getProcessedTemplate();
+            Bitmap bitmap = TemplateDataHolder.getInstance().getProcessedTemplate(); // 剪裁過的圖片
 
             runOnUiThread(() -> {
                 identifyTemplate(bitmap);
@@ -53,25 +52,54 @@ public class IdentifyingTemplate extends AppCompatActivity {
         }).start();
     }
 
-    void saveImage(Bitmap image){
+    void saveImage(Bitmap image, Bitmap processedTemplate){
         // 存到相簿
         try {
             // 建議放背景執行緒，避免 UI 卡頓
+            long timestamp = System.currentTimeMillis();
             Uri saved = ImageSaver.saveBitmapToGallery(
                     this,                // Activity 實例
                     image,     // 你處理過的 Bitmap
-                    "processed_" + System.currentTimeMillis());
+                    "processed_" + timestamp);
+
+            String hiddenTemplate = "hidden_" + timestamp;
+            Uri processedTemplateUri = ImageSaver.saveBitmapToApp(
+                    this,
+                    processedTemplate,
+                    hiddenTemplate);
+
+            // 處理歷史紀錄儲存
+            try {
+                getContentResolver().takePersistableUriPermission(
+                        saved,
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                );
+                getContentResolver().takePersistableUriPermission(
+                        processedTemplateUri,
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                );
+            } catch (SecurityException e) {
+                e.printStackTrace();
+            }
+
+            LocalHistoryUtils localHistoryUtils = new LocalHistoryUtils();
+            Map<String, History> historyMap = localHistoryUtils.load(this);
+            List<TableLines> tableLines = List.of(new TableLines(tableLineRows, tableLineCols));
+            History newHistory = new History(tableLines, "/hidden_images/" + hiddenTemplate + ".png", timestamp);
+            historyMap.put(saved.toString(), newHistory);
+            localHistoryUtils.save(this, historyMap);
+
+            TemplateDataHolder.getInstance().setDrawnTemplate(image);
+            TemplateDataHolder.getInstance().setTableLineRows(tableLineRows);
+            TemplateDataHolder.getInstance().setTableLineCols(tableLineCols);
+            Log.d("DebugTable", "tableLineRows: " + Arrays.toString(tableLineRows));
+            Log.d("DebugTable", "tableLineCols: " + Arrays.toString(tableLineCols));
 
             runOnUiThread(() -> {
                 Toast.makeText(this,
                         "已存到相簿：" + saved,
                         Toast.LENGTH_SHORT).show();
 
-                intent.putExtra("processed_template", saved.toString());
-                TemplateDataHolder.getInstance().setTableLineRows(tableLineRows);
-                TemplateDataHolder.getInstance().setTableLineCols(tableLineCols);
-                Log.d("DebugTable", "tableLineRows: " + Arrays.toString(tableLineRows));
-                Log.d("DebugTable", "tableLineCols: " + Arrays.toString(tableLineCols));
                 startActivity(intent);
                 finish();
             });
@@ -104,7 +132,7 @@ public class IdentifyingTemplate extends AppCompatActivity {
             templateBitmap = bitmap;
             runOnUiThread(() -> status.setText("模板畫線中..."));
             Bitmap drawnBitmap = CallPython.drawTableLines(bitmap, cols, rows);
-            saveImage(drawnBitmap);
+            saveImage(drawnBitmap, templateBitmap);
         }).start();
     }
 }

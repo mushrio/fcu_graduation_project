@@ -112,8 +112,6 @@ public class IdentifyResult extends AppCompatActivity {
         mbtnSaveResult.setOnClickListener(v -> {
             BottomSheetSaveFile saveFile = new BottomSheetSaveFile();
             Bundle bundle = new Bundle();
-            bundle.putString("image_uri", getIntent().getStringExtra("image_uri"));
-            bundle.putString("processed_template", getIntent().getStringExtra("processed_template"));
             bundle.putInt("image_count", uriStrings.size());
             bundle.putStringArrayList("recognized_strings", recognizedStrings);
 
