@@ -5,12 +5,14 @@ import static android.app.Activity.RESULT_OK;
 import android.content.Context;
 import android.content.Intent;
 
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -21,6 +23,8 @@ import androidx.annotation.Nullable;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
 
+import java.util.Objects;
+
 public class BottomSheetFragment extends BottomSheetDialogFragment {
 
     private ActivityResultLauncher<Intent> getResult;
@@ -28,8 +32,6 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-
-
     }
 
     @Override
@@ -61,11 +63,19 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         // 加載底部彈出選單的佈局
         View view = inflater.inflate(R.layout.fragment_bottom_sheet, container, false);
 
+        SharedPreferences prefs = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        boolean cameraPermissionGranted = prefs.getBoolean("camera_permission_granted", false);
+
         // 設置選項的按鈕
         MaterialButton option1 = view.findViewById(R.id.mbtn_photo);
         MaterialButton option2 = view.findViewById(R.id.mbtn_image_box);
 
         option1.setOnClickListener(v -> {
+            if (!cameraPermissionGranted) {
+                Toast.makeText(getActivity(), "權限未授予，拍照功能無法使用", Toast.LENGTH_SHORT).show();
+                dismiss();
+                return;
+            }
             Intent intent = new Intent(getActivity(), TakeOnePhoto.class);
             startActivity(intent);
             dismiss();

@@ -2,12 +2,18 @@ package fcu.graduation.handwritingrecognition;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
+import android.Manifest;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.chaquo.python.Python;
@@ -33,6 +39,9 @@ import fcu.graduation.handwritingrecognition.utils.LocalHistoryUtils;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final static int REQUEST_CODE_CAMERA = 2001; // 數字是自訂的
+    private SharedPreferences prefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,12 +50,14 @@ public class MainActivity extends AppCompatActivity {
         // 初始化 ViewPager2
         ViewPager2 vp2TemplateRec = findViewById(R.id.vp2_template_record);
 
-        SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean("from_main", false);
         editor.putString("models", "lowerLetter.onnx");
         editor.remove("history");
         editor.apply();
+
+        checkAndRequestCameraPermission();
 
         TemplateDataHolder.getInstance().clear();
 
@@ -122,5 +133,46 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return validHistoryList;
+    }
+
+    private void checkAndRequestCameraPermission() {
+        List<String>  permissions = new ArrayList<>();
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            permissions.add(Manifest.permission.CAMERA);
+        }
+
+        if (!permissions.isEmpty()) {
+            ActivityCompat.requestPermissions(this,
+                    permissions.toArray(new String[0]),
+                    REQUEST_CODE_CAMERA);
+        } else { // 若已經有授權，則將變數設為 true
+            prefs.edit().putBoolean("camera_permission_granted", true).apply();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == REQUEST_CODE_CAMERA) {
+            boolean granted = true;
+
+            for (int result : grantResults) {
+                if (result != PackageManager.PERMISSION_GRANTED) {
+                    granted = false;
+                    break;
+                }
+            }
+
+            if (granted) { // 按下允許
+                prefs.edit().putBoolean("camera_permission_granted", true).apply();
+            } else { // 按下不允許
+                Toast.makeText(this, "權限未授予，拍照功能將會無法使用", Toast.LENGTH_SHORT).show();
+                prefs.edit().putBoolean("camera_permission_granted", false).apply();
+            }
+        }
     }
 }
