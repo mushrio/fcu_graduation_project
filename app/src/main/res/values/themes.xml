@@ -3,6 +3,8 @@
     <style name="Base.Theme.HandwritingRecognition" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="iconTintColor">@color/black</item>
     </style>
 
     <style name="Theme.HandwritingRecognition" parent="Base.Theme.HandwritingRecognition" />

@@ -27,7 +27,8 @@
         android:layout_marginBottom="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/baseline_check_24" />
+        app:srcCompat="@drawable/baseline_check_24"
+        app:tint="?attr/iconTintColor"/>
 
     <ImageView
         android:id="@+id/iv_deny"
@@ -37,6 +38,7 @@
         android:layout_marginBottom="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/baseline_clear_24" />
+        app:srcCompat="@drawable/baseline_clear_24"
+        app:tint="?attr/iconTintColor"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

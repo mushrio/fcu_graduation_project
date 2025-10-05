@@ -1,15 +1,14 @@
 package fcu.graduation.handwritingrecognition.adapter;
 
 import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
-
-import org.apache.xmlbeans.impl.xb.xmlconfig.Extensionconfig;
 
 import java.util.List;
 
@@ -43,6 +42,9 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Resources res = context.getResources();
+        int nightModeFlags = res.getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+
         ImageView imageView = new ImageView(context);
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         imageView.setLayoutParams(new ViewGroup.LayoutParams(
@@ -51,7 +53,11 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         ));
 
         if (viewType == VIEW_TYPE_NO_HISTORY) {
-            imageView.setImageResource(R.drawable.nohistory);
+            if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
+                imageView.setImageResource(R.drawable.nohistory_night);
+            } else {
+                imageView.setImageResource(R.drawable.nohistory);
+            }
             return new NoHistoryViewHolder(imageView);
         } else {
             return new ImageViewHolder(imageView);
