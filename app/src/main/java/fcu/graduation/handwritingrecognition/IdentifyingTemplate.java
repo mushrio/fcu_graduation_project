@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -84,8 +85,11 @@ public class IdentifyingTemplate extends AppCompatActivity {
 
             LocalHistoryUtils localHistoryUtils = new LocalHistoryUtils();
             Map<String, History> historyMap = localHistoryUtils.load(this);
+
             List<TableLines> tableLines = List.of(new TableLines(tableLineRows, tableLineCols));
-            History newHistory = new History(tableLines, "/hidden_images/" + hiddenTemplate + ".png", timestamp);
+            File hiddenFile = new File(this.getFilesDir(), "/hidden_images/" + hiddenTemplate + ".png");
+            Uri hiddenUri = Uri.fromFile(hiddenFile);
+            History newHistory = new History(tableLines, hiddenUri.toString(), timestamp);
             historyMap.put(saved.toString(), newHistory);
             localHistoryUtils.save(this, historyMap);
 

@@ -123,7 +123,8 @@ public class MainActivity extends AppCompatActivity {
             } catch (IOException e) {
                 // 無法讀取圖片，可能是被刪除了，將資料從 history.json 移除，並移除掉 hidden 的照片，進行被動刪除
                 History history = entry.getValue();
-                File hiddenFile = new File(getFilesDir() ,history.getClippedTemplate());
+                Uri hiddenUri = Uri.parse(history.getClippedTemplate());
+                File hiddenFile = new File(hiddenUri.getPath());
                 boolean deleted = hiddenFile.delete();
                 if (!deleted) {
                     Log.w("History", "刪除 hidden 檔案失敗：" + hiddenFile.getAbsolutePath());
