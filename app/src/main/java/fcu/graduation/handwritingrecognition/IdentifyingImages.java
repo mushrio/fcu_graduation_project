@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -98,7 +99,19 @@ public class IdentifyingImages extends AppCompatActivity {
                 Uri currentUri = imageUris.get(index);
                 Bitmap pickedBitmap = ImageUtils.getBitmapFromUri(this, currentUri);
                 Log.d("DebugCheck", "Bitmap loaded for index " + index);
+                Log.d("DebugCheck", "WidthDiff:" + Math.abs(templateBitmap.getWidth() - pickedBitmap.getWidth()));
 
+                int widthDiff = Math.abs(templateBitmap.getWidth() - pickedBitmap.getWidth());
+                int heightDiff = Math.abs(templateBitmap.getHeight() - pickedBitmap.getHeight());
+                double toleranceRate = 0.8;
+
+                if (widthDiff > pickedBitmap.getWidth() * toleranceRate + 10 || heightDiff > pickedBitmap.getHeight() * toleranceRate + 10) {
+                    runOnUiThread(() -> {
+                        Toast.makeText(this, "模板與選定圖片尺寸差距過大", Toast.LENGTH_SHORT).show();
+                        finish();
+                    });
+                    return;
+                }
                 if (templateBitmap != null && tableLineCols != null && tableLineRows != null) {
 
                     Bitmap[] cellImages = CallPython.getCellImage(pickedBitmap, templateBitmap, tableLineCols, tableLineRows, 256);
@@ -221,13 +234,20 @@ public class IdentifyingImages extends AppCompatActivity {
     }
 
     private char classToChar(int cls, String modelName) {
-        if (modelName.contains("digit")) {
+        if (modelName.contains("mix")) {
+            if (cls > 10) {
+                return (char) ('a' + cls - 11);
+            } else if (cls == 10) {
+                return '.';
+            } else {
+                return (char) ('0' + cls);
+            }
+        } else if (modelName.contains("digit")) {
             if (cls == 10) return '.'; // 小數點編號為10
             return (char) ('0' + cls);
-        } else if (modelName.contains("lowerLetter")) {
+        } else {
             return (char) ('a' + cls);
         }
-        return '?'; // fallback
     }
 
     @Override

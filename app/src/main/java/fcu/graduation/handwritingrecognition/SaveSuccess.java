@@ -27,6 +27,7 @@ public class SaveSuccess extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SaveSuccess.this, SelectIdentifyModel.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // 清除掉 SelectIdentifyModel 之上的所有 activity
                 startActivity(intent);
                 finish();
             }
@@ -37,6 +38,7 @@ public class SaveSuccess extends AppCompatActivity {
             public void onClick(View v) {
                 TemplateDataHolder.getInstance().clear();
                 Intent intent = new Intent(SaveSuccess.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK); // 清掉 MainActivity 之上的所有 activity，以及以新的 task 開始(避免舊的 stack 殘留)
                 startActivity(intent);
                 finish();
             }

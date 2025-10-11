@@ -3,6 +3,7 @@ package fcu.graduation.handwritingrecognition.core;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.chaquo.python.PyException;
 import com.chaquo.python.PyObject;
 import com.chaquo.python.Python;
 
@@ -90,17 +91,22 @@ public class CallPython {
          */
         byte[] pngBytes = encodePng(templateImg);
         int[] focusCoord = {x1,x2, y1,y2};
-        PyObject linesResult = getModule().callAttr("detect_lines", pngBytes, focusCoord);
-        PyObject rowsObj = linesResult.asList().get(0);
-        PyObject colsObj = linesResult.asList().get(1);
-        int[] rows = rowsObj.toJava(int[].class);
-        int[] cols = colsObj.toJava(int[].class);
-        for(int i=0;i<rows.length;i++) rows[i] += y1;
-        for(int i=0;i<cols.length;i++) cols[i] += x1;
-        int[][] result = new int[2][];
-        result[0] = rows;
-        result[1] = cols;
-        return result;
+        try {
+            // 如果框選一個沒有表格的地方會出現錯誤
+            PyObject linesResult = getModule().callAttr("detect_lines", pngBytes, focusCoord);
+            PyObject rowsObj = linesResult.asList().get(0);
+            PyObject colsObj = linesResult.asList().get(1);
+            int[] rows = rowsObj.toJava(int[].class);
+            int[] cols = colsObj.toJava(int[].class);
+            for(int i=0;i<rows.length;i++) rows[i] += y1;
+            for(int i=0;i<cols.length;i++) cols[i] += x1;
+            int[][] result = new int[2][];
+            result[0] = rows;
+            result[1] = cols;
+            return result;
+        } catch (PyException e) {
+            return null;
+        }
     }
 
     public static Bitmap drawTableLines(Bitmap templateImg, int[] colLines, int[] rowLines){

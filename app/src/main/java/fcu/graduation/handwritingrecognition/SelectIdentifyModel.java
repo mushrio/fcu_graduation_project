@@ -2,7 +2,6 @@ package fcu.graduation.handwritingrecognition;
 
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,7 +20,7 @@ public class SelectIdentifyModel extends AppCompatActivity {
 
     private ImageView ivSelectRangePhoto;
     private MaterialButton mtbnSelectModel;
-    private MaterialButton mtbnLoadIdentifiedModel;
+    private MaterialButton mtbnChooseIdentifiedImages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +29,7 @@ public class SelectIdentifyModel extends AppCompatActivity {
 
         ivSelectRangePhoto = findViewById(R.id.iv_select_range_photo);
         mtbnSelectModel = findViewById(R.id.mbtn_select_model);
-        mtbnLoadIdentifiedModel = findViewById(R.id.mbtn_load_identified_model);
+        mtbnChooseIdentifiedImages = findViewById(R.id.mbtn_choose_identified_images);
 
         Bitmap drawnTemplate = TemplateDataHolder.getInstance().getDrawnTemplate();
         SharedPreferences prefs = this.getSharedPreferences("MyPrefs", MODE_PRIVATE);
@@ -81,7 +80,7 @@ public class SelectIdentifyModel extends AppCompatActivity {
             }
         });
 
-        mtbnLoadIdentifiedModel.setOnClickListener(new View.OnClickListener() {
+        mtbnChooseIdentifiedImages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 BottomSheetPhotoOrImage photoOrImage = new BottomSheetPhotoOrImage();

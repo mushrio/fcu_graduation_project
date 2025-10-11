@@ -59,7 +59,6 @@ public class SelectIdentifyRange extends AppCompatActivity {
                 Intent intent = new Intent(this, IdentifyingTemplate.class);
                 intent.putExtra("coordinates", coordinates);
                 startActivity(intent);
-                finish();
             }
         });
 

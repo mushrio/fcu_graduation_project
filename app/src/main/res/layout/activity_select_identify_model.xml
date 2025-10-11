@@ -35,11 +35,11 @@
         app:rippleColor="@color/material_dynamic_primary30" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/mbtn_load_identified_model"
+        android:id="@+id/mbtn_choose_identified_images"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginTop="16dp"
-        android:text="載入辨識模型"
+        android:text="選擇辨識圖片"
         android:textSize="24sp"
         app:backgroundTint="@color/material_dynamic_primary40"
         app:cornerRadius="16dp"

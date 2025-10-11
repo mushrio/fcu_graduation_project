@@ -128,7 +128,14 @@ public class IdentifyingTemplate extends AppCompatActivity {
         TextView status = findViewById(R.id.tv_loading_text);
         new Thread(() -> {
             runOnUiThread(() -> status.setText("線段偵測中..."));
-            int[][] tableLines = CallPython.detectLines(bitmap, coordinates[0], coordinates[1], coordinates[2], coordinates[3]); // 使用者框選的範圍，這裡是自己手打的座標:606, 3194, 1568, 2297
+            int[][] tableLines = CallPython.detectLines(bitmap, coordinates[0], coordinates[1], coordinates[2], coordinates[3]); // 使用者框選的範圍
+            if (tableLines == null) {
+                runOnUiThread(() -> {
+                    Toast.makeText(this, "偵測表格線失敗，請確定圖片是否含有表格線", Toast.LENGTH_SHORT).show();
+                    finish();
+                });
+                return;
+            }
             int[] rows = tableLines[0];
             int[] cols = tableLines[1];
             tableLineRows = rows;
