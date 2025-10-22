@@ -1,4 +1,4 @@
-package fcu.graduation.handwritingrecognition;
+package fcu.graduation.handwritingrecognition.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,17 +20,16 @@ import com.chaquo.python.Python;
 import com.chaquo.python.android.AndroidPlatform;
 import com.google.android.material.button.MaterialButton;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import fcu.graduation.handwritingrecognition.R;
 import fcu.graduation.handwritingrecognition.adapter.ImageAdapter;
 import fcu.graduation.handwritingrecognition.core.CallPython;
+import fcu.graduation.handwritingrecognition.fragment.BottomSheetFragment;
 import fcu.graduation.handwritingrecognition.holder.TemplateDataHolder;
 import fcu.graduation.handwritingrecognition.model.History;
 import fcu.graduation.handwritingrecognition.model.TableLines;

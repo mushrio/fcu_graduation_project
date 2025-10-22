@@ -1,4 +1,4 @@
-package fcu.graduation.handwritingrecognition;
+package fcu.graduation.handwritingrecognition.fragment;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -23,6 +23,10 @@ import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import fcu.graduation.handwritingrecognition.activities.IdentifyingImages;
+import fcu.graduation.handwritingrecognition.R;
+import fcu.graduation.handwritingrecognition.activities.TakeSeveralPhotos;
 
 public class BottomSheetPhotoOrImage extends BottomSheetDialogFragment {
 

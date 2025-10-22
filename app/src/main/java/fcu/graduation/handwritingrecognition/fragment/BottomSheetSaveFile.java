@@ -1,4 +1,4 @@
-package fcu.graduation.handwritingrecognition;
+package fcu.graduation.handwritingrecognition.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,14 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
 
@@ -22,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import fcu.graduation.handwritingrecognition.R;
+import fcu.graduation.handwritingrecognition.activities.SaveSuccess;
 import fcu.graduation.handwritingrecognition.utils.CsvUtils;
 import fcu.graduation.handwritingrecognition.utils.ExcelUtils;
 

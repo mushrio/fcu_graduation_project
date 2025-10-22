@@ -1,4 +1,4 @@
-package fcu.graduation.handwritingrecognition;
+package fcu.graduation.handwritingrecognition.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -19,10 +19,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import fcu.graduation.handwritingrecognition.R;
 import fcu.graduation.handwritingrecognition.core.CallPython;
 import fcu.graduation.handwritingrecognition.holder.TemplateDataHolder;
 import fcu.graduation.handwritingrecognition.model.History;
 import fcu.graduation.handwritingrecognition.model.TableLines;
+import fcu.graduation.handwritingrecognition.utils.ImageSaver;
 import fcu.graduation.handwritingrecognition.utils.LocalHistoryUtils;
 
 public class IdentifyingTemplate extends AppCompatActivity {

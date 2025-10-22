@@ -1,4 +1,4 @@
-package fcu.graduation.handwritingrecognition;
+package fcu.graduation.handwritingrecognition.activities;
 
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -12,6 +12,9 @@ import com.google.android.material.button.MaterialButton;
 
 import java.util.Map;
 
+import fcu.graduation.handwritingrecognition.R;
+import fcu.graduation.handwritingrecognition.fragment.BottomSheetPhotoOrImage;
+import fcu.graduation.handwritingrecognition.fragment.BottomSheetSelectModel;
 import fcu.graduation.handwritingrecognition.holder.TemplateDataHolder;
 import fcu.graduation.handwritingrecognition.model.History;
 import fcu.graduation.handwritingrecognition.utils.LocalHistoryUtils;

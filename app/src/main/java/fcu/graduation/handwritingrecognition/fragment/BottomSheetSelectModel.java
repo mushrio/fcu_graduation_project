@@ -1,4 +1,4 @@
-package fcu.graduation.handwritingrecognition;
+package fcu.graduation.handwritingrecognition.fragment;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
+
+import fcu.graduation.handwritingrecognition.R;
 
 public class BottomSheetSelectModel extends BottomSheetDialogFragment {
 

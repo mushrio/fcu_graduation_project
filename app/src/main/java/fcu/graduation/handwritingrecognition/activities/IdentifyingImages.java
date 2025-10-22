@@ -1,4 +1,4 @@
-package fcu.graduation.handwritingrecognition;
+package fcu.graduation.handwritingrecognition.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -21,9 +21,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import fcu.graduation.handwritingrecognition.R;
 import fcu.graduation.handwritingrecognition.core.CallPython;
 import fcu.graduation.handwritingrecognition.core.YOLOInference;
 import fcu.graduation.handwritingrecognition.holder.TemplateDataHolder;
+import fcu.graduation.handwritingrecognition.model.CellResult;
 import fcu.graduation.handwritingrecognition.utils.ImageUtils;
 
 public class IdentifyingImages extends AppCompatActivity {

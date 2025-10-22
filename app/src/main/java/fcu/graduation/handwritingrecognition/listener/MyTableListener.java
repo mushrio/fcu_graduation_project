@@ -13,7 +13,7 @@ import com.evrencoskun.tableview.listener.ITableViewListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import fcu.graduation.handwritingrecognition.IdentifyResult;
+import fcu.graduation.handwritingrecognition.activities.IdentifyResult;
 import fcu.graduation.handwritingrecognition.adapter.MyTableAdapter;
 import fcu.graduation.handwritingrecognition.holder.TemplateDataHolder;
 import fcu.graduation.handwritingrecognition.model.Cell;

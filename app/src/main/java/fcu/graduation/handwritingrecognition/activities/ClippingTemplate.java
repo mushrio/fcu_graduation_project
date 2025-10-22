@@ -1,4 +1,4 @@
-package fcu.graduation.handwritingrecognition;
+package fcu.graduation.handwritingrecognition.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import fcu.graduation.handwritingrecognition.R;
 import fcu.graduation.handwritingrecognition.core.CallPython;
 import fcu.graduation.handwritingrecognition.holder.TemplateDataHolder;
 import fcu.graduation.handwritingrecognition.utils.ImageUtils;

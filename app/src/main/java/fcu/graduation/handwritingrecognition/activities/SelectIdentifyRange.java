@@ -1,10 +1,9 @@
-package fcu.graduation.handwritingrecognition;
+package fcu.graduation.handwritingrecognition.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.RectF;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -14,8 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
 
+import fcu.graduation.handwritingrecognition.R;
 import fcu.graduation.handwritingrecognition.holder.TemplateDataHolder;
-import fcu.graduation.handwritingrecognition.utils.ImageUtils;
 import fcu.graduation.handwritingrecognition.widget.DragRectImageView;
 
 public class SelectIdentifyRange extends AppCompatActivity {

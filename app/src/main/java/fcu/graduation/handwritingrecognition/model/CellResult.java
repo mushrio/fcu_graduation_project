@@ -1,8 +1,4 @@
-package fcu.graduation.handwritingrecognition;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+package fcu.graduation.handwritingrecognition.model;
 
 public class CellResult {
     public float x;

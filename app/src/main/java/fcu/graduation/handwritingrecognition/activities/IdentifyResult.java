@@ -1,9 +1,8 @@
-package fcu.graduation.handwritingrecognition;
+package fcu.graduation.handwritingrecognition.activities;
 
 import android.app.Dialog;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,7 +15,9 @@ import com.google.android.material.button.MaterialButton;
 import java.util.ArrayList;
 import java.util.List;
 
+import fcu.graduation.handwritingrecognition.R;
 import fcu.graduation.handwritingrecognition.adapter.MyTableAdapter;
+import fcu.graduation.handwritingrecognition.fragment.BottomSheetSaveFile;
 import fcu.graduation.handwritingrecognition.holder.TemplateDataHolder;
 import fcu.graduation.handwritingrecognition.listener.MyTableListener;
 import fcu.graduation.handwritingrecognition.model.Cell;

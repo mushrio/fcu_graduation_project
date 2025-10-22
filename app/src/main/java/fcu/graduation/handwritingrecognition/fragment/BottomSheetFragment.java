@@ -1,4 +1,4 @@
-package fcu.graduation.handwritingrecognition;
+package fcu.graduation.handwritingrecognition.fragment;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -23,7 +23,9 @@ import androidx.annotation.Nullable;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
 
-import java.util.Objects;
+import fcu.graduation.handwritingrecognition.activities.ClippingTemplate;
+import fcu.graduation.handwritingrecognition.R;
+import fcu.graduation.handwritingrecognition.activities.TakeOnePhoto;
 
 public class BottomSheetFragment extends BottomSheetDialogFragment {
 

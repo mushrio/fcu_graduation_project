@@ -1,12 +1,9 @@
-package fcu.graduation.handwritingrecognition;
+package fcu.graduation.handwritingrecognition.activities;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,55 +20,29 @@ import com.google.android.material.button.MaterialButton;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class TakeSeveralPhotos extends AppCompatActivity {
+import fcu.graduation.handwritingrecognition.R;
 
-    private final List<Uri> capturedImageUris = new ArrayList<>();
+public class TakeOnePhoto extends AppCompatActivity {
+
     ProcessCameraProvider cameraProvider;
-    private PreviewView pvvSeveralPhotos;
+    private PreviewView pvvOnePhoto;
     private ImageCapture imageCapture;
-    private MaterialButton mbtnTakeSeveralPhotos;
-    private MaterialButton mbtnTakePhotoComplete;
-    private TextView tvPhotoed;
+    private MaterialButton mbtnTakeOnePhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_take_several_photos);
+        setContentView(R.layout.activity_take_one_photo);
 
-        pvvSeveralPhotos = findViewById(R.id.pvv_several_photos);
-        mbtnTakeSeveralPhotos = findViewById(R.id.mbtn_take_several_photos);
-        mbtnTakePhotoComplete = findViewById(R.id.mbtn_take_photo_complete);
-        tvPhotoed = findViewById(R.id.tv_photoed);
+        pvvOnePhoto = findViewById(R.id.pvv_one_photo);
+        mbtnTakeOnePhoto = findViewById(R.id.mbtn_take_one_photo);
 
-        mbtnTakeSeveralPhotos.setOnClickListener(new View.OnClickListener() {
-
+        mbtnTakeOnePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 takePhoto();
-            }
-        });
-
-        mbtnTakePhotoComplete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (capturedImageUris.isEmpty()) {
-                    Toast.makeText(TakeSeveralPhotos.this, "尚未拍攝任何照片", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                // 傳 Uri list 到下個 Activity
-                ArrayList<String> uriStrings = new ArrayList<>();
-                for (Uri uri : capturedImageUris) {
-                    uriStrings.add(uri.toString());
-                }
-
-                Intent intent = new Intent(TakeSeveralPhotos.this, IdentifyingImages.class);
-                intent.putStringArrayListExtra("image_uris", uriStrings);
-                startActivity(intent);
             }
         });
 
@@ -97,17 +68,18 @@ public class TakeSeveralPhotos extends AppCompatActivity {
             return;
 
         File photoFile = new File(getExternalFilesDir(null), System.currentTimeMillis() + ".jpg");
+
         Uri savedImageUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".fileprovider", photoFile);
+
         ImageCapture.OutputFileOptions outputFileOptions = new ImageCapture.OutputFileOptions.Builder(photoFile).build();
 
         imageCapture.takePicture(outputFileOptions, ContextCompat.getMainExecutor(this), new ImageCapture.OnImageSavedCallback() {
-            @SuppressLint("SetTextI18n")
             @Override
             public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
-                // ✅ 存進 list
-                capturedImageUris.add(savedImageUri);
-                Toast.makeText(TakeSeveralPhotos.this, "已拍照", Toast.LENGTH_SHORT).show();
-                tvPhotoed.setText("已拍攝" + capturedImageUris.size() + "張照片");
+                Intent intent = new Intent(TakeOnePhoto.this, ConfirmPhoto.class);
+                intent.putExtra("image_uri", savedImageUri.toString());
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                startActivity(intent);
             }
 
             @Override
@@ -122,7 +94,7 @@ public class TakeSeveralPhotos extends AppCompatActivity {
 
         Preview preview = new Preview.Builder().build();
 
-        preview.setSurfaceProvider(pvvSeveralPhotos.getSurfaceProvider());
+        preview.setSurfaceProvider(pvvOnePhoto.getSurfaceProvider());
 
         imageCapture = new ImageCapture.Builder().build();
 

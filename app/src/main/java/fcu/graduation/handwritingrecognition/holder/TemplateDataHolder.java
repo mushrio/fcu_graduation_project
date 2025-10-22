@@ -57,7 +57,7 @@ public class TemplateDataHolder {
         return this.tableLineCols;
     }
 
-    // 清除所有資料（可選）
+    // 清除所有資料
     public void clear() {
         this.processedTemplate = null;
         this.tableLineRows = null;
