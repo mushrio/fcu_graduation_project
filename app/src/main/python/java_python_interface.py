@@ -69,7 +69,6 @@ def crop_image(png_bytearray, x1,x2, y1,y2):
     result_img = img[y1:y2, x1:x2]
     return encode(result_img)
 
-# 未測試
 def crop_cell_images(target_byte_array, template_byte_array, col_lines, row_lines, model_input_size):
     # 給一張目標辨識文件圖片(定位前)、表格線的欄座標和列座標、模板形狀、和模型輸入大小，輸出所有準備送給模型辨識的欄位圖片。
     # 參數：
@@ -92,10 +91,9 @@ def crop_cell_images(target_byte_array, template_byte_array, col_lines, row_line
 def draw_table_lines(png_bytearray, rows, cols):
     # 給一張文件圖片(定位後)、表格線的欄座標和列座標，在圖片上面畫上偵測到的表格線。
     # 參數：
-    # png_bytearray: png編碼成byte陣列的圖片
+    # png_bytearray: png編碼成byte陣列的手機拍攝圖片
     # cols, rows: 霍夫直線偵測到表格線的欄座標和列座標
     # 返回：畫了偵測到的表格線的圖片
     img = decode(png_bytearray)
     draw_table_line(img, rows, cols)
     return encode(img)
-
